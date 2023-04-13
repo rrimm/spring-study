@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+     PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mysite.springtest0301.GradeMapper">
+	<resultMap type="HashMap" id="gradeHashMap">
+		<result property="id" column="id" />
+		<result property="name" column="name" />
+		<result property="grade" column="grade" />
+	</resultMap>
+
+	<select id="getGradeList" resultType="GradeVO">
+		select * from gradetbl order by id
+	</select>
+	
+	<select id="getGradeList2" resultType="HashMap">
+		select id, name, grade from gradetbl order by id
+	</select>
+	
+	<select id="getGradeList3" resultType="GradeDTO">
+		select id, name, grade from gradetbl order by id
+	</select>
+
+	<!-- id: 메서드명, parameterType: 메서드에 전달될 파라미터, resultType: select 결과값 저장에 
+		사용 -->
+		
+	<select id="getGrade" parameterType="HashMap"
+		resultType="GradeVO">
+		select * from gradetbl where id=#{id} and name=#{name}
+	</select>
+		
+	<select id="selectGrade" parameterType="String"
+		resultType="GradeVO">
+		select * from gradetbl where id=#{id}
+	</select>
+
+	<select id="selectGrade2" parameterType="String"
+		resultMap="gradeHashMap">
+		select id, name, grade from gradetbl where id=#{id}
+	</select>
+
+	<select id="selectGrade3" parameterType="String"
+		resultType="HashMap">
+		select id, name, grade from gradetbl where id=#{id}
+	</select>
+
+	<select id="selectGrade4" parameterType="String"
+		resultType="GradeDTO">
+		select id, name, grade from gradetbl where id=#{id}
+	</select>
+
+	<insert id="insertGrade" parameterType="GradeVO">
+		insert into gradetbl values(#{id}, #{name}, #{kor},#{eng},#{math},#{tot},#{avg},#{grade})
+	</insert>
+
+	<update id="updateGrade" parameterType="GradeVO">
+		update gradetbl set
+		kor=#{kor}, eng=#{eng}, math=#{math}, tot=#{tot},
+		avg=#{avg}, grade=#{grade} where id=#{id}
+	</update>
+
+	<delete id="deleteGrade" parameterType="String">
+		delete from gradetbl where
+		id=#{id}
+	</delete>
+
+	<select id="countGrade" resultType="int">
+		select count(*) from gradetbl
+	</select>
+
+</mapper>
